@@ -5,29 +5,86 @@
   <title>Task Force Phalanx – Mod Selector</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Oswald&display=swap" rel="stylesheet">
   <style>
-    body { background:#f4f4f4; color:#333; font-family:'Open Sans',sans-serif; font-size:17px; padding:20px; margin:0; }
-    h1 { background:#424242; color:#fff; font-family:'Oswald',sans-serif; font-size:2rem; padding:10px 20px; margin:0 0 20px; border-radius:4px; }
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #f4f4f4;
+      color: #333;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 17px;
+      padding: 20px;
+    }
+    h1 {
+      background: #424242;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      padding: 10px 20px;
+      margin: 0 0 20px;
+      border-radius: 4px;
+    }
     .category h2 {
-      font-family:'Oswald',sans-serif; font-size:1.2rem; margin:0; padding:10px 0; border-bottom:2px solid #ccc;
-      cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      margin: 0;
+      padding: 10px 0;
+      border-bottom: 2px solid #ccc;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-	.category.collapsed .mod-container {
-	  display: none;
-	}
-
-    .mod-list { background:#fff; border-radius:5px; padding:20px; box-shadow:0 0 5px rgba(0,0,0,0.1); }
-    .category { margin-bottom:30px; }
-    .section-control { margin:10px 0; }
-    .mod-container .mod { margin-bottom:12px; }
-    .mod-container label { margin-left:8px; cursor:pointer; }
-    .mod-container a { font-size:15px; color:#d18f21; margin-left:10px; text-decoration:none; }
-    .mod-container a:hover { text-decoration:underline; }
+    .category.collapsed .mod-container {
+      display: none;
+    }
+    .mod-list {
+      background: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .category {
+      margin-bottom: 30px;
+    }
+    .section-control {
+      margin: 10px 0;
+    }
+    .mod-container .mod {
+      margin-bottom: 12px;
+    }
+    .mod-container label {
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .mod-container a {
+      font-size: 15px;
+      color: #d18f21;
+      margin-left: 10px;
+      text-decoration: none;
+    }
+    .mod-container a:hover {
+      text-decoration: underline;
+    }
     button {
-      background:#424242; color:#fff; border:none; padding:10px 18px; font-size:17px;
-      cursor:pointer; border-radius:3px; font-family:'Open Sans',sans-serif; margin-top:20px;
+      background: #424242;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      font-size: 17px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: 'Open Sans', sans-serif;
+      margin-top: 20px;
     }
-    button:hover { background:#5e5e5e; }
-    @media(max-width:600px){ h1{font-size:1.5rem;} button{width:100%;} }
+    button:hover {
+      background: #5e5e5e;
+    }
+    @media(max-width:600px) {
+      h1 { font-size: 1.5rem; }
+      button { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -38,7 +95,7 @@
     <!-- Mission Mods -->
     <div class="category" id="mission-category">
       <h2 onclick="toggleCollapse('mission-category')">
-        Mission Mods<span>▾</span>
+        Mission Mods <span>▾</span>
       </h2>
       <div class="section-control">
         <input type="checkbox" id="toggle-mission" onchange="toggleSection('mission-list', this.checked)">
@@ -50,7 +107,7 @@
     <!-- Joint Op Mods -->
     <div class="category" id="jointop-category">
       <h2 onclick="toggleCollapse('jointop-category')">
-        Joint Op Mods<span>▾</span>
+        Joint Op Mods <span>▾</span>
       </h2>
       <div class="section-control">
         <input type="checkbox" id="toggle-jointop" onchange="toggleSection('jointop-list', this.checked)">
@@ -62,7 +119,7 @@
     <!-- Core Mods -->
     <div class="category" id="core-category">
       <h2 onclick="toggleCollapse('core-category')">
-        Core Mods<span>▾</span>
+        Core Mods <span>▾</span>
       </h2>
       <div class="section-control">
         <input type="checkbox" id="toggle-core" onchange="toggleSection('core-list', this.checked)">
@@ -74,7 +131,7 @@
     <!-- Optional Mods -->
     <div class="category" id="optional-category">
       <h2 onclick="toggleCollapse('optional-category')">
-        Optional Mods<span>▾</span>
+        Optional Mods <span>▾</span>
       </h2>
       <div class="section-control">
         <input type="checkbox" id="toggle-optional" onchange="toggleSection('optional-list', this.checked)">
@@ -87,7 +144,8 @@
   <button onclick="downloadHTML()">Download Launcher-Preset (.html)</button>
 
   <script>
-    let missionEnabled = false, jointopEnabled = false;
+    let missionEnabled = false,
+        jointopEnabled = false;
 
     function toggleCollapse(catId) {
       document.getElementById(catId).classList.toggle('collapsed');
@@ -115,7 +173,7 @@
     function fetchAndRenderMods(url, containerId, prefix) {
       fetch(url).then(r => r.text()).then(html => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
-        doc.querySelectorAll('tr[data-type="ModContainer"]').forEach((row,i) => {
+        doc.querySelectorAll('tr[data-type="ModContainer"]').forEach((row, i) => {
           const name = row.querySelector('td[data-type="DisplayName"]').textContent.trim();
           const link = row.querySelector('a[data-type="Link"]').href.trim();
           const div = document.createElement('div');
@@ -131,7 +189,7 @@
       });
     }
 
-    // Load all lists
+    // Load all lists dynamically
     fetchAndRenderMods(
       'https://raw.githubusercontent.com/loltorres9/TFP-Mods/refs/heads/main/mission_mods.html',
       'mission-list','mission'
@@ -149,6 +207,7 @@
       'optional-list','opt'
     );
 
+    // Prevent manual toggling of Mission & JointOp individual checkboxes
     document.addEventListener('change', e => {
       if (e.target.id.startsWith('mission')) {
         e.target.checked = missionEnabled;
@@ -212,13 +271,3 @@ a{color:#d4af37;text-decoration:underline}
   </script>
 </body>
 </html>
-<!-- ganz unten in deiner Seite -->
-<details>
-  <summary>Mod Loading Instructions</summary>
-  <ol>
-    <li>Click “Mods” in your Arma 3 Launcher…</li>
-    <li>…</li>
-    <li>Click “Save” and name it</li>
-  </ol>
-</details>
-
