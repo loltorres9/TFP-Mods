@@ -236,6 +236,16 @@
         .map(cb => ({ name: cb.dataset.name, link: cb.dataset.link }))
         .filter(mod => !seen.has(mod.link) && seen.add(mod.link));
 
+      // Fallback: if only Core/Optional selected (no mission/jointop), ensure CBA_A3 is included
+      const coreOrOptPicked = !missionEnabled && !jointopEnabled && selected.length > 0;
+      const hasCBA = selected.some(m => m.link.includes('id=450814997'));
+      if (coreOrOptPicked && !hasCBA) {
+        selected.unshift({
+          name: "CBA_A3",
+          link: "https://steamcommunity.com/sharedfiles/filedetails/?id=450814997"
+        });
+      }
+
       const rows = selected.map(m => `
         <tr data-type="ModContainer">
           <td data-type="DisplayName">${m.name}</td>
