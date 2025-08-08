@@ -5,10 +5,7 @@
   <title>Task Force Phalanx – Mod Selector</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Oswald&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    html, body { margin: 0; padding: 0; }
     body {
       background: #f4f4f4;
       color: #333;
@@ -94,7 +91,7 @@
   <div class="mod-list">
     <!-- Mission Mods -->
     <div class="category" id="mission-category">
-      <h2 onclick="toggleCollapse('mission-category')">
+      <h2 onclick="toggleCollapse('mission-category')" title="Modlist for our weekly missions">
         Mission Mods <span>▾</span>
       </h2>
       <div class="section-control">
@@ -106,7 +103,7 @@
 
     <!-- Joint Op Mods -->
     <div class="category" id="jointop-category">
-      <h2 onclick="toggleCollapse('jointop-category')">
+      <h2 onclick="toggleCollapse('jointop-category')" title="Modlist for our monthly large scale missions">
         Joint Op Mods <span>▾</span>
       </h2>
       <div class="section-control">
@@ -118,7 +115,7 @@
 
     <!-- Core Mods -->
     <div class="category" id="core-category">
-      <h2 onclick="toggleCollapse('core-category')">
+      <h2 onclick="toggleCollapse('core-category')" title="Our core mods, used pretty much every time">
         Core Mods <span>▾</span>
       </h2>
       <div class="section-control">
@@ -130,7 +127,7 @@
 
     <!-- Optional Mods -->
     <div class="category" id="optional-category">
-      <h2 onclick="toggleCollapse('optional-category')">
+      <h2 onclick="toggleCollapse('optional-category')" title="Whitelisted clientside mods mostly to improve visuals">
         Optional Mods <span>▾</span>
       </h2>
       <div class="section-control">
@@ -189,7 +186,7 @@
       });
     }
 
-    // Load all lists dynamically
+    // Load all sections dynamically
     fetchAndRenderMods(
       'https://raw.githubusercontent.com/loltorres9/TFP-Mods/refs/heads/main/mission_mods.html',
       'mission-list','mission'
@@ -236,10 +233,10 @@
         .map(cb => ({ name: cb.dataset.name, link: cb.dataset.link }))
         .filter(mod => !seen.has(mod.link) && seen.add(mod.link));
 
-      // Fallback: if only Core/Optional selected (no mission/jointop), ensure CBA_A3 is included
-      const coreOrOptPicked = !missionEnabled && !jointopEnabled && selected.length > 0;
+      // Fallback: if only Core/Optional selected, ensure CBA_A3 is included
+      const coreOrOpt = !missionEnabled && !jointopEnabled && selected.length > 0;
       const hasCBA = selected.some(m => m.link.includes('id=450814997'));
-      if (coreOrOptPicked && !hasCBA) {
+      if (coreOrOpt && !hasCBA) {
         selected.unshift({
           name: "CBA_A3",
           link: "https://steamcommunity.com/sharedfiles/filedetails/?id=450814997"
@@ -259,13 +256,17 @@
 <meta name="arma:Type" content="list"/>
 <meta name="generator" content="Arma 3 Launcher - https://arma3.com"/>
 <title>Arma 3</title>
-<style>body{background:#000;color:#fff;font-family:Arial,sans-serif}
-.mod-list{background:#222;padding:20px}td{padding:3px 30px 3px 0}
-a{color:#d4af37;text-decoration:underline}
+<style>
+  body { background:#000; color:#fff; font-family:Arial, sans-serif; }
+  .mod-list { background:#222; padding:20px; }
+  td { padding:3px 30px 3px 0; }
+  a { color:#d4af37; text-decoration:underline; }
 </style>
 </head><body>
 <h1>Arma 3 Mods</h1>
-<p class="before-list"><em>To import this preset, drag this file onto the Launcher window or use IMPORT in MODS → PRESET.</em></p>
+<p class="before-list">
+  <em>To import this preset, drag this file onto the Launcher window or use IMPORT in MODS → PRESET.</em>
+</p>
 <div class="mod-list"><table>${rows}</table></div>
 <div class="footer"><span>Created by Task Force Phalanx Mod Selector</span></div>
 </body></html>`;
@@ -273,7 +274,7 @@ a{color:#d4af37;text-decoration:underline}
       const blob = new Blob([htmlContent], { type: 'text/html' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'taskforce_phalanx_mods.html';
+      a.download = 'mod_selector_v2.4.html';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
