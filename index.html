@@ -253,10 +253,17 @@
           link: "https://steamcommunity.com/sharedfiles/filedetails/?id=450814997"
         });
       }
+      // Escape-Funktion für Sonderzeichen (Arma 3 Import-Kompatibilität)
+function escapeXML(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
 
       const rows = selected.map(m => `
         <tr data-type="ModContainer">
-          <td data-type="DisplayName">${m.name}</td>
+          <td data-type="DisplayName">${escapeXML(m.name)}</td>
           <td><span class="from-steam">Steam</span></td>
           <td><a href="${m.link}" data-type="Link">${m.link}</a></td>
         </tr>
@@ -293,6 +300,7 @@
   </script>
 </body>
 </html>
+
 
 
 
