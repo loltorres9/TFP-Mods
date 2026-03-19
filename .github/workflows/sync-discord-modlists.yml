@@ -2,7 +2,7 @@ name: Sync Modlists from Discord
 
 on:
   schedule:
-    - cron: "*/30 * * * *"  # runs every 30 minutes
+    - cron: "*/5 * * * *"   # runs every 5 minutes
   workflow_dispatch:         # allows manual trigger from GitHub Actions tab
 
 jobs:
@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -38,5 +40,5 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "chore: sync modlists from Discord"
-            git push
+            git push origin main
           fi
