@@ -178,7 +178,7 @@
       document.getElementById(toggleId).checked = boxes.length > 0 && boxes.every(cb => cb.checked);
     }
 
-    function fetchAndRenderMods(url, containerId, prefix) {
+    function fetchAndRenderMods(url, containerId, prefix, hideCheckbox = false) {
       fetch(url).then(r => r.text()).then(html => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
         doc.querySelectorAll('tr[data-type="ModContainer"]').forEach((row, i) => {
@@ -186,11 +186,13 @@
           const link = row.querySelector('a[data-type="Link"]').href.trim();
           const div = document.createElement('div');
           div.className = 'mod';
-          div.innerHTML = `
-            <input type="checkbox" id="${prefix}${i}" data-name="${name}" data-link="${link}">
-            <label for="${prefix}${i}">${name}</label>
-            <a href="${link}" target="_blank">[Steam]</a>
-          `;
+          div.innerHTML = hideCheckbox
+            ? `<input type="checkbox" id="${prefix}${i}" data-name="${name}" data-link="${link}" style="display:none">
+               <span>${name}</span>
+               <a href="${link}" target="_blank">[Steam]</a>`
+            : `<input type="checkbox" id="${prefix}${i}" data-name="${name}" data-link="${link}">
+               <label for="${prefix}${i}">${name}</label>
+               <a href="${link}" target="_blank">[Steam]</a>`;
           document.getElementById(containerId).appendChild(div);
         });
         updateToggleState(containerId, 'toggle-' + containerId.replace('-list',''));
@@ -200,11 +202,11 @@
     // Load all sections dynamically
     fetchAndRenderMods(
       'https://raw.githubusercontent.com/loltorres9/TFP-Mods/refs/heads/main/mission_mods.html',
-      'mission-list','mission'
+      'mission-list','mission', true
     );
     fetchAndRenderMods(
       'https://raw.githubusercontent.com/loltorres9/TFP-Mods/refs/heads/main/taskforce_phalanx_mods_JointOp.html',
-      'jointop-list','jointop'
+      'jointop-list','jointop', true
     );
     fetchAndRenderMods(
       'https://raw.githubusercontent.com/loltorres9/TFP-Mods/refs/heads/main/taskforce_phalanx_mods%20core.html',
