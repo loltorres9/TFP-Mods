@@ -124,18 +124,6 @@
       <div class="mod-container" id="jointop-list"></div>
     </div>
 
-    <!-- Core Mods -->
-    <div class="category" id="core-category">
-      <h2 onclick="toggleCollapse('core-category')" title="Our core mods, used pretty much every time">
-        Core Mods <span>▾</span>
-      </h2>
-      <div class="section-control">
-        <input type="checkbox" id="toggle-core" onchange="toggleSection('core-list', this.checked)">
-        <label for="toggle-core"><strong>Select all Core Mods</strong></label>
-      </div>
-      <div class="mod-container" id="core-list"></div>
-    </div>
-
     <!-- Optional Mods -->
     <div class="category" id="optional-category">
       <h2 onclick="toggleCollapse('optional-category')" title="Whitelisted clientside mods mostly to improve visuals">
@@ -146,6 +134,18 @@
         <label for="toggle-optional"><strong>Select all Optional Mods</strong></label>
       </div>
       <div class="mod-container" id="optional-list"></div>
+    </div>
+
+    <!-- Core Mods -->
+    <div class="category collapsed" id="core-category">
+      <h2 onclick="toggleCollapse('core-category')" title="Our core mods, used pretty much every time">
+        Core Mods <span>▾</span>
+      </h2>
+      <div class="section-control">
+        <input type="checkbox" id="toggle-core" onchange="toggleSection('core-list', this.checked)">
+        <label for="toggle-core"><strong>Select all Core Mods</strong></label>
+      </div>
+      <div class="mod-container" id="core-list"></div>
     </div>
   </div>
 
